@@ -38,11 +38,11 @@ namespace Black_Red_tree
         //смещаем правого сына наверх
         private void LeftRotate(Node n)
         {
-            var isRoot = false;
+            bool isRoot = false;
             if (n.Parent == null)
                 isRoot = true;
-            var pivot = n.Right;
-            //pivot может стать корнем дерева 
+
+            Node pivot = n.Right;
             pivot.Parent = n.Parent;
             if (n.Parent != null)
             {
@@ -50,6 +50,7 @@ namespace Black_Red_tree
                     n.Parent.Left = pivot;
                 else n.Parent.Right = pivot;
             }
+
             n.Right = pivot.Left;
             if (pivot.Left != null)
                 pivot.Left.Parent = n;
@@ -61,11 +62,10 @@ namespace Black_Red_tree
         //смещаем левого сына наверх
         private void RightRotate(Node n)
         {
-            var isRoot = false;
+            bool isRoot = false;
             if (n.Parent == null)
                 isRoot = true;
-            var pivot = n.Left;
-            //pivot может стать корнем дерева 
+            Node pivot = n.Left;
             pivot.Parent = n.Parent;
             if (n.Parent != null)
             {
@@ -215,12 +215,13 @@ namespace Black_Red_tree
         private void Add4(Node newItem)
         {
             var P = newItem.Parent;
-            if (newItem == P.Right && P == P.Parent.Left)
+            var G = Grandpa(newItem);
+            if (newItem == P.Right && P == G.Left)
             {
                 LeftRotate(P);
                 newItem = newItem.Left;
             }
-            else if (newItem == newItem.Parent.Left && newItem.Parent == P.Parent.Right)
+            else if (newItem == newItem.Parent.Left && newItem.Parent == G.Right)
             {
                 RightRotate(P);
                 newItem = newItem.Right;
@@ -234,10 +235,8 @@ namespace Black_Red_tree
             newItem.Parent.Colour = Color.B;
             grandpa.Colour = Color.R;
             if (newItem == newItem.Parent.Left && newItem.Parent == grandpa.Left)
-
                 RightRotate(grandpa);
-            else
-                LeftRotate(grandpa);
+            else LeftRotate(grandpa);
         }
         #endregion
         #region Поиск минимального и максимального Node 
@@ -324,8 +323,7 @@ namespace Black_Red_tree
         {
             if (n == n.Parent.Left)
                 return n.Parent.Right;
-            else
-                return n.Parent.Left;
+            else return n.Parent.Left;
         }
 
         private void Replace(Node item, Node Y)
@@ -388,8 +386,8 @@ namespace Black_Red_tree
             {
                 if (Y == Y.Parent.Left)
                     Y.Parent.Left = Y.Right;
-                else Y.Parent.Right = Y.Right;
-
+                else
+                    Y.Parent.Right = Y.Right;
                 Y.Right.Parent = Y.Parent;
                 Y.Right.Colour = Color.B;
             }
@@ -397,14 +395,15 @@ namespace Black_Red_tree
             {
                 if (Y == Y.Parent.Left)
                     Y.Parent.Left = Y.Left;
-                else Y.Right = Y.Left;
+                else
+                    Y.Parent.Right = Y.Left;
                 Y.Left.Parent = Y.Parent;
                 Y.Left.Colour = Color.B;
             }
             else
             {
-                Delete(Y);//смена цвета
-                          //удаляем узел
+                Delete(Y);
+                //смена цвета и удаляем узел
                 Node X = null;
                 if (Y.Left != null)
                     X = Y.Left;
@@ -416,7 +415,6 @@ namespace Black_Red_tree
                 if (Y.Parent == null)
                 {
                     Root = X;
-                    Root.Parent = null;
                 }
                 else if (Y == Y.Parent.Left)
                     Y.Parent.Left = X;
@@ -508,19 +506,16 @@ namespace Black_Red_tree
         private void DeleteCase6(Node n)
         {
             var bro = FindBrother(n);
-            if (bro != null)
-                bro.Colour = n.Parent.Colour;
+            bro.Colour = n.Parent.Colour;
             n.Parent.Colour = Color.B;
             if (n == n.Parent.Left)
             {
-                if (bro != null && bro.Right != null)
-                    bro.Right.Colour = Color.B;
+                bro.Right.Colour = Color.B;
                 LeftRotate(n.Parent);
             }
             else
             {
-                if (bro != null && bro.Left != null)
-                    bro.Left.Colour = Color.B;
+                bro.Left.Colour = Color.B;
                 RightRotate(n.Parent);
             }
             #endregion

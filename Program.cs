@@ -17,10 +17,10 @@ namespace Black_Red_tree
             int[] nodes = { 5,23,32,19,39,69,96,29,76,67};
             int[] nodes1= { 25, 8, 52, 46, 22, 78 };
             ITree tree = new RBTree();
-            var random = new Random();// random.Next(1, 100);
+            var random = new Random();// nodes[i];
             for (int i = 0; i < nodes.Length; i++)
             {
-                var node = nodes[i];
+                var node = random.Next(1, 100);
                 if (tree.FindNodeByKey(node) == null)
                     tree.AddNode(node);
             }

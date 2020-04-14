@@ -10,9 +10,9 @@
             public Node Parent;
             public double Value;
             public Node() { }
-            public Node(double data)
+            public Node(double value)
             {
-                this.Value = data;
+                this.Value = value;
                 this.Colour = Color.R;
                 this.Left = null;
                 this.Right = null;
