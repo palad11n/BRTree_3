@@ -271,7 +271,7 @@ namespace Black_Red_tree
         }
         #endregion
         #region Поиск следующего и предыдущего Node
-        
+
         //ближайшее большее
         public Node FindNextNode(double key)
         {
@@ -330,7 +330,7 @@ namespace Black_Red_tree
             else
                 return n.Parent.Left;
         }
-        
+
         private void Replace(Node item, Node Y)
         {
             item.Value = Y.Value;
@@ -347,72 +347,73 @@ namespace Black_Red_tree
 
             if (item.Left == null || item.Right == null)
             {
-                Y = item;
+                if (item.Parent == null)
+                    Y = item.Right == null ? FindPrevNode(item.Value) : FindNextNode(item.Value);
+                else Y = item;
             }
-            else
-            {
-                Y = FindNextNode(item.Value);
-            }
+            else Y = FindPrevNode(item.Value);
 
             Replace(item, Y);//меняем значение без разрыва связи
+
+            if (Y.Colour != Color.R && Y.Right == null && Y.Left == null)
+            {
+                Delete(Y);
+                if (Y.Parent != null && Y == Y.Parent.Right)
+                    Y.Parent.Right = null;
+                else if (Y.Parent != null)
+                    Y.Parent.Left = null;
+                return Root.Value;
+            }
 
             if (Y.Colour == Color.R)
             {
                 if (Y == Y.Parent.Left)
                 {
                     Y.Parent.Left = Y.Right;
-                    Y.Left.Parent = Y.Parent;
+                    if (Y.Left != null)
+                        Y.Left.Parent = Y.Parent;
                 }
                 else
                 {
                     Y.Parent.Right = Y.Right;
-                    Y.Right.Parent = Y.Parent;
+                    if (Y.Right != null)
+                        Y.Right.Parent = Y.Parent;
                 }
             }
-            else 
+            else
                 if (Y.Colour == Color.B && Y.Right != null && Y.Right.Colour == Color.R)
-                {
-                    if (Y == Y.Parent.Left)
-                        Y.Parent.Left = Y.Right;
-                    else
-                        Y.Parent.Right = Y.Right;
-                    Y.Right.Parent = Y.Parent;
-                    Y.Right.Colour = Color.B;
-                }
+            {
+                if (Y == Y.Parent.Left)
+                    Y.Parent.Left = Y.Right;
                 else
+                    Y.Parent.Right = Y.Right;
+                Y.Right.Parent = Y.Parent;
+                Y.Right.Colour = Color.B;
+            }
+            else
+            {
+                Delete(Y);//смена цвета
+                          //удаляем узел
+                Node X = null;
+                if (Y.Left != null)
+                    X = Y.Left;
+                else X = Y.Right;
+
+                if (X != null)
+                    X.Parent = Y;
+
+                if (Y.Parent == null)
                 {
-                    Delete(Y);//смена цвета
-                    //удаляем узел
-                    Node X = null;
-                    if (Y.Left != null)
-                    {
-                        X = Y.Left;
-                    }
-                    else
-                    {
-                        X = Y.Right;
-                    }
-                    if (X != null)
-                    {
-                        X.Parent = Y;
-                    }
-                    if (Y.Parent == null)
-                    {
-                        Root = X;
-                    }
-                    else if (Y == Y.Parent.Left)
-                    {
-                        Y.Parent.Left = X;
-                    }
-                    else
-                    {
-                        Y.Parent.Right = X;
-                    }
-                    if (Y != item)
-                    {
-                        item.Value = Y.Value;
-                    }
+                    Root = X;
+                    Root.Parent = null;
                 }
+                else if (Y == Y.Parent.Left)
+                    Y.Parent.Left = X;
+                else Y.Parent.Right = X;
+
+                if (Y != item)
+                    item.Value = Y.Value;
+            }
             return Root.Value;
         }
 
@@ -421,7 +422,7 @@ namespace Black_Red_tree
             if (n.Parent != null)
                 DeleteCase2(n);
         }
-        
+
         private void DeleteCase2(Node n)
         {
             var bro = FindBrother(n);
@@ -436,11 +437,11 @@ namespace Black_Red_tree
             }
             DeleteCase3(n);
         }
-        
+
         private void DeleteCase3(Node n)
         {
             var bro = FindBrother(n);
-            if (n.Parent.Colour == Color.B && bro.Colour == Color.B && ((bro.Left == null && bro.Right == null) 
+            if (n.Parent.Colour == Color.B && bro.Colour == Color.B && ((bro.Left == null && bro.Right == null)
                 || (bro.Left != null && bro.Left.Colour == Color.B
             && bro.Right != null &&
 
@@ -451,12 +452,12 @@ namespace Black_Red_tree
             }
             else DeleteCase4(n);
         }
-        
+
         private void DeleteCase4(Node n)
         {
             var bro = FindBrother(n);
             if (((bro.Left == null && bro.Right == null) || ((bro.Left != null && bro.Left.Colour == Color.B)
-            && (bro.Right != null && bro.Right.Colour == Color.B))) 
+            && (bro.Right != null && bro.Right.Colour == Color.B)))
             && n.Parent.Colour == Color.R && bro.Colour == Color.B)
             {
                 bro.Colour = Color.R;
@@ -464,7 +465,7 @@ namespace Black_Red_tree
             }
             else DeleteCase5(n);
         }
-        
+
         private void DeleteCase5(Node n)
         {
             var bro = FindBrother(n);
@@ -485,7 +486,7 @@ namespace Black_Red_tree
             }
             DeleteCase6(n);
         }
-        
+
         private void DeleteCase6(Node n)
         {
             var bro = FindBrother(n);
