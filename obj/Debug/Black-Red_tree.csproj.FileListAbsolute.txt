@@ -1,0 +1,33 @@
+c:\users\макс\documents\visual studio 2017\Projects\Black-Red_tree\Black-Red_tree\bin\Debug\Black-Red_tree.exe.config
+c:\users\макс\documents\visual studio 2017\Projects\Black-Red_tree\Black-Red_tree\bin\Debug\Black-Red_tree.exe
+c:\users\макс\documents\visual studio 2017\Projects\Black-Red_tree\Black-Red_tree\bin\Debug\Black-Red_tree.pdb
+c:\users\макс\documents\visual studio 2017\Projects\Black-Red_tree\Black-Red_tree\obj\Debug\Black-Red_tree.csprojResolveAssemblyReference.cache
+c:\users\макс\documents\visual studio 2017\Projects\Black-Red_tree\Black-Red_tree\obj\Debug\Black-Red_tree.exe
+c:\users\макс\documents\visual studio 2017\Projects\Black-Red_tree\Black-Red_tree\obj\Debug\Black-Red_tree.pdb
+C:\Users\Админ\Desktop\Новая папка (8)\bin\Debug\Black-Red_tree.exe.config
+C:\Users\Админ\Desktop\Новая папка (8)\bin\Debug\Black-Red_tree.exe
+C:\Users\Админ\Desktop\Новая папка (8)\bin\Debug\Black-Red_tree.pdb
+C:\Users\Админ\Desktop\Новая папка (8)\obj\Debug\Black-Red_tree.csprojResolveAssemblyReference.cache
+C:\Users\Админ\Desktop\Новая папка (8)\obj\Debug\Black-Red_tree.csproj.CoreCompileInputs.cache
+C:\Users\Админ\Desktop\Новая папка (8)\obj\Debug\Black-Red_tree.exe
+C:\Users\Админ\Desktop\Новая папка (8)\obj\Debug\Black-Red_tree.pdb
+C:\Users\Саша\Desktop\ИК\bin\Debug\Black-Red_tree.exe.config
+C:\Users\Саша\Desktop\ИК\bin\Debug\Black-Red_tree.exe
+C:\Users\Саша\Desktop\ИК\bin\Debug\Black-Red_tree.pdb
+C:\Users\Саша\Desktop\ИК\obj\Debug\Black-Red_tree.csprojAssemblyReference.cache
+C:\Users\Саша\Desktop\ИК\obj\Debug\Black-Red_tree.csproj.CoreCompileInputs.cache
+C:\Users\Саша\Desktop\ИК\obj\Debug\Black-Red_tree.exe
+C:\Users\Саша\Desktop\ИК\obj\Debug\Black-Red_tree.pdb
+C:\Users\макс\Desktop\чер1\bin\Debug\Black-Red_tree.exe.config
+C:\Users\макс\Desktop\чер1\bin\Debug\Black-Red_tree.exe
+C:\Users\макс\Desktop\чер1\bin\Debug\Black-Red_tree.pdb
+C:\Users\макс\Desktop\чер1\obj\Debug\Black-Red_tree.csprojResolveAssemblyReference.cache
+C:\Users\макс\Desktop\чер1\obj\Debug\Black-Red_tree.exe
+C:\Users\макс\Desktop\чер1\obj\Debug\Black-Red_tree.pdb
+C:\Users\Админ\Desktop\Последняя\bin\Debug\Black-Red_tree.exe.config
+C:\Users\Админ\Desktop\Последняя\bin\Debug\Black-Red_tree.exe
+C:\Users\Админ\Desktop\Последняя\bin\Debug\Black-Red_tree.pdb
+C:\Users\Админ\Desktop\Последняя\obj\Debug\Black-Red_tree.csprojResolveAssemblyReference.cache
+C:\Users\Админ\Desktop\Последняя\obj\Debug\Black-Red_tree.csproj.CoreCompileInputs.cache
+C:\Users\Админ\Desktop\Последняя\obj\Debug\Black-Red_tree.exe
+C:\Users\Админ\Desktop\Последняя\obj\Debug\Black-Red_tree.pdb
