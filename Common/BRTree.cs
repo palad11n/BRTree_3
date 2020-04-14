@@ -4,15 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using Black_Red_tree.Common;
 
 namespace Black_Red_tree
 {
-    public partial class RBTree
+    public partial class RBTree : ITree
     {
         /// <summary> 
         /// Корневой узел 
         /// </summary> 
-        public Node Root;
+        private Node Root;
+
+        Node ITree.Root { get => this.Root; set => Root = value; }
+
         public RBTree() { }
         private Node Grandpa(Node key)
         {

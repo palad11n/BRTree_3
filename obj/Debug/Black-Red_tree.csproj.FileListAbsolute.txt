@@ -31,3 +31,10 @@ C:\Users\Админ\Desktop\Последняя\obj\Debug\Black-Red_tree.csprojRe
 C:\Users\Админ\Desktop\Последняя\obj\Debug\Black-Red_tree.csproj.CoreCompileInputs.cache
 C:\Users\Админ\Desktop\Последняя\obj\Debug\Black-Red_tree.exe
 C:\Users\Админ\Desktop\Последняя\obj\Debug\Black-Red_tree.pdb
+C:\Users\max\Desktop\rbtree\bin\Debug\Black-Red_tree.exe.config
+C:\Users\max\Desktop\rbtree\bin\Debug\Black-Red_tree.exe
+C:\Users\max\Desktop\rbtree\bin\Debug\Black-Red_tree.pdb
+C:\Users\max\Desktop\rbtree\obj\Debug\Black-Red_tree.csprojAssemblyReference.cache
+C:\Users\max\Desktop\rbtree\obj\Debug\Black-Red_tree.csproj.CoreCompileInputs.cache
+C:\Users\max\Desktop\rbtree\obj\Debug\Black-Red_tree.exe
+C:\Users\max\Desktop\rbtree\obj\Debug\Black-Red_tree.pdb
