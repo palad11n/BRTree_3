@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29820.132
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Black-Red_tree", "Black-Red_tree.csproj", "{97A34952-57A7-458D-AF6A-988068FE2AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Black-Red_tree.UnitTests", "..\Black-Red_tree.UnitTests\Black-Red_tree.UnitTests.csproj", "{DF140080-E5E9-4CD2-B120-3360154DE3C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{97A34952-57A7-458D-AF6A-988068FE2AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97A34952-57A7-458D-AF6A-988068FE2AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97A34952-57A7-458D-AF6A-988068FE2AA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF140080-E5E9-4CD2-B120-3360154DE3C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF140080-E5E9-4CD2-B120-3360154DE3C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF140080-E5E9-4CD2-B120-3360154DE3C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF140080-E5E9-4CD2-B120-3360154DE3C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -46,14 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BRTree.cs" />
-    <Compile Include="PrintOfTree.cs" />
+    <Compile Include="Common\BRTree.cs" />
+    <Compile Include="Common\Entities\Color.cs" />
+    <Compile Include="Common\ITree.cs" />
+    <Compile Include="Common\Entities\Node.cs" />
+    <Compile Include="Common\Print\PrintOfTree.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReverceInput.cs" />
+    <Compile Include="Common\Print\ReverceInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

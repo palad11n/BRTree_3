@@ -13,13 +13,13 @@ namespace Black_Red_tree
     {
         static void Main(string[] args)
         {
-            var tree = new RB();
+            var tree = new RBTree();
             var random = new Random();
             for (int i = 0; i < 26; i++)
             {
                 var node = random.Next(1, 100);
-                if (tree.FindKey(node) == null)
-                    tree.Add(node);
+                if (tree.FindNodeByKey(node) == null)
+                    tree.AddNode(node);
             }
             PrintOfTree.Print(tree.Root);
             ReverceInput.Input(tree);

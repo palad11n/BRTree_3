@@ -8,7 +8,7 @@ namespace Black_Red_tree
 {
     class ReverceInput
     {
-        public static void Input(RB tree)
+        public static void Input(RBTree tree)
         {
             string help = "1 x - Add(x)\n2 x - Delete(x)\n3 x - Find(x)\n4   - Min()\n5   - Max()\n6 x - FindNext(x)\n7 x - FindPrevious(x)";
             Console.WriteLine(help);
@@ -24,7 +24,7 @@ namespace Black_Red_tree
                             case '1':
                                 try 
                                 {
-                                    tree.Add(Convert.ToDouble((button.Split(' ')[1])));
+                                    tree.AddNode(Convert.ToDouble((button.Split(' ')[1])));
                                     PrintOfTree.Print(tree.Root);
                                 }
                                 catch (Exception)
@@ -36,7 +36,7 @@ namespace Black_Red_tree
                             case '2':
                                 try
                                 {
-                                    if (double.IsNaN(tree.Delete1(Convert.ToDouble(button.Split(' ')[1]))))
+                                    if (double.IsNaN(tree.RemoveNode(Convert.ToDouble(button.Split(' ')[1]))))
                                         Console.WriteLine("Node does not exist");
                                    else PrintOfTree.Print(tree.Root);
                                 }
@@ -49,11 +49,11 @@ namespace Black_Red_tree
                                 Console.Write("Color of node: ");
                                 try
                                 {
-                                    if (tree.Find(Convert.ToInt32(button.Split(' ')[1])) == Color.NaN)
+                                    if (tree.GetColorNodeByKey(Convert.ToInt32(button.Split(' ')[1])) == Color.NaN)
                                     {
                                         Console.WriteLine("Node does not exist");
                                     }
-                                    else Console.WriteLine(tree.Find(Convert.ToInt32(button.Split(' ')[1])));
+                                    else Console.WriteLine(tree.GetColorNodeByKey(Convert.ToInt32(button.Split(' ')[1])));
                                 }
                                 catch (Exception)
                                 {
@@ -62,23 +62,23 @@ namespace Black_Red_tree
                                 break;
                             case '4':
                                 Console.Write("Min node: ");
-                                if (button == "4") Console.WriteLine(tree.Min().Value);
+                                if (button == "4") Console.WriteLine(tree.MinNode().Value);
                                 else Console.WriteLine("Incorrect expression with Min()");
                                 break;
                             case '5':
                                 Console.Write("Max node: ");
-                                if (button == "5") Console.WriteLine(tree.Max().Value);
+                                if (button == "5") Console.WriteLine(tree.MaxNode().Value);
                                 else Console.WriteLine("Incorrect expression with Max()");
                                 break;
                             case '6':
                                 try
                                 {
-                                    if (tree.FindNext(Convert.ToInt32(button.Split(' ')[1])) == null)
+                                    if (tree.FindNextNode(Convert.ToInt32(button.Split(' ')[1])) == null)
                                         Console.WriteLine("FindNext: Node does not exist");
                                     else
                                     {
                                         Console.Write("Next node of {0}: ", button.Split(' ')[1]);
-                                        Console.WriteLine(tree.FindNext(Convert.ToInt32(button.Split(' ')[1])).Value);
+                                        Console.WriteLine(tree.FindNextNode(Convert.ToInt32(button.Split(' ')[1])).Value);
                                     }
                                 }
                                 catch (Exception)
@@ -89,12 +89,12 @@ namespace Black_Red_tree
                             case '7':
                                 try
                                 {
-                                    if (tree.FindPrev(Convert.ToInt32(button.Split(' ')[1])) == null)
+                                    if (tree.FindPrevNode(Convert.ToInt32(button.Split(' ')[1])) == null)
                                         Console.WriteLine("FindPrevious: Node does not exist");
                                     else
                                     {
                                         Console.Write("Previous node of {0}: ", button.Split(' ')[1]);
-                                        Console.WriteLine(tree.FindPrev(Convert.ToInt32(button.Split(' ')[1])).Value);
+                                        Console.WriteLine(tree.FindPrevNode(Convert.ToInt32(button.Split(' ')[1])).Value);
                                     }
                                 }
                                 catch (Exception)

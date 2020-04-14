@@ -7,35 +7,13 @@ using System.Collections.Specialized;
 
 namespace Black_Red_tree
 {
-    enum Color
+    public partial class RBTree
     {
-        R,
-        B,
-        NaN
-    }
-    class RB
-    {
-        public class Node
-        {
-            public Color Colour;
-            public Node Left;
-            public Node Right;
-            public Node Parent;
-            public double Value;
-            public Node() { }
-            public Node(double data)
-            {
-                this.Value = data;
-                this.Colour = Color.R;
-                this.Left = null;
-                this.Right = null;
-            }
-        }
         /// <summary> 
         /// Корневой узел 
         /// </summary> 
         public Node Root;
-        public RB() { }
+        public RBTree() { }
         private Node Grandpa(Node key)
         {
             if (key != null && key.Parent != null)
@@ -100,8 +78,14 @@ namespace Black_Red_tree
                 Root = pivot;
         }
         #endregion
-        #region вспомогательные методы 
-        public Node FindKey(double key)
+        #region Вспомогательные методы
+        public Color GetColorNodeByKey(double key)
+        {
+            var isExist = FindNodeByKey(key);
+            return isExist == null ? Color.NaN : isExist.Colour;
+        }
+
+        public Node FindNodeByKey(double key)
         {
             bool isFound = false;
             Node temp = Root;
@@ -123,7 +107,7 @@ namespace Black_Red_tree
             else return null;
         }
 
-        private void Insert(double key)
+        private void InsertInTree(double key)
         {
             if (Root == null)
                 Root = new Node(key);
@@ -133,7 +117,6 @@ namespace Black_Red_tree
                 while (node != null)
                 {
                     var nextNode = key < node.Value ? node.Left : node.Right;
-
                     if (nextNode == null)
                         if (key < node.Value)
                         {
@@ -149,13 +132,50 @@ namespace Black_Red_tree
                 }
             }
         }
-        #endregion
-        #region Add 
-        public void Add(double key)
+
+        private Node FindMin(double key)
         {
-            if (FindKey(key) != null) return; // проверка содержимого в дереве
-            Insert(key);
-            Node newItem = FindKey(key);
+            var node = FindNodeByKey(key);
+            if (node == null)
+                return null;
+            if (node.Left == null)
+                return node;
+            var nextNode = node.Left;
+            if (nextNode == null)
+                return null;
+            while (nextNode != null)
+            {
+                node = nextNode;
+                nextNode = nextNode.Left;
+            }
+            return node;
+        }
+
+        private Node FindMax(double key)
+        {
+            var node = FindNodeByKey(key);
+            if (node == null)
+                return null;
+            if (node.Right == null)
+                return node;
+            var nextNode = node.Right;
+            if (nextNode == null)
+                return node.Right;
+
+            while (nextNode != null)
+            {
+                node = nextNode;
+                nextNode = nextNode.Right;
+            }
+            return node;
+        }
+        #endregion
+        #region Добавление Node 
+        public void AddNode(double key)
+        {
+            if (FindNodeByKey(key) != null) return; // проверка содержимого в дереве
+            InsertInTree(key);
+            Node newItem = FindNodeByKey(key);
             newItem.Colour = Color.R;
             Add1(newItem);
         }
@@ -217,8 +237,8 @@ namespace Black_Red_tree
                 LeftRotate(grandpa);
         }
         #endregion
-        #region Min-Max 
-        public Node Min()
+        #region Поиск минимального и максимального Node 
+        public Node MinNode()
         {
             if (Root == null)
                 return null;
@@ -232,7 +252,7 @@ namespace Black_Red_tree
             return node;
         }
 
-        public Node Max()
+        public Node MaxNode()
         {
             if (Root == null)
                 return null;
@@ -246,54 +266,12 @@ namespace Black_Red_tree
             return node;
         }
         #endregion
-        #region FindMin-FMax
-        public Node FindMin(double key)
-        {
-            var node = FindKey(key);
-            if (node == null)
-                return null;
-            if (node.Left == null)
-                return node;
-            var nextNode = node.Left;
-            if (nextNode == null)
-                return null;
-            while (nextNode != null)
-            {
-                node = nextNode;
-                nextNode = nextNode.Left;
-            }
-            return node;
-        }
-
-        public Node FindMax(double key)
-        {
-            var node = FindKey(key);
-            if (node == null)
-                return null;
-            if (node.Right == null)
-                return node;
-            var nextNode = node.Right;
-            if (nextNode == null)
-                return node.Right;
-
-            while (nextNode != null)
-            {
-                node = nextNode;
-                nextNode = nextNode.Right;
-            }
-            return node;
-        }
-        #endregion
-        #region FindNext-Prev FindColor
-        public Color Find(double key)
-        {
-            var isExist = FindKey(key);
-            return isExist == null ? Color.NaN : isExist.Colour;
-        }
+        #region Поиск следующего и предыдущего Node
+        
         //ближайшее большее
-        public Node FindNext(double key)
+        public Node FindNextNode(double key)
         {
-            var node = FindKey(key);
+            var node = FindNodeByKey(key);
             if (node == null)
                 return null;
             if (node.Right != null)
@@ -315,9 +293,9 @@ namespace Black_Red_tree
             return node;
         }
         //ближайшее меньшее
-        public Node FindPrev(double key)
+        public Node FindPrevNode(double key)
         {
-            var node = FindKey(key);
+            var node = FindNodeByKey(key);
             if (node == null)
                 return null;
             if (node.Left != null)
@@ -340,8 +318,8 @@ namespace Black_Red_tree
         }
 
         #endregion
-        #region delete 
-        public Node FindBrother(Node n)
+        #region Удаление Node
+        private Node FindBrother(Node n)
         {
             if (n == n.Parent.Left)
                 return n.Parent.Right;
@@ -349,14 +327,14 @@ namespace Black_Red_tree
                 return n.Parent.Left;
         }
         
-        public void Replace(Node item, Node Y)
+        private void Replace(Node item, Node Y)
         {
             item.Value = Y.Value;
         }
 
-        public double Delete1(double key)
+        public double RemoveNode(double key)
         {
-            Node item = FindKey(key);
+            Node item = FindNodeByKey(key);
             Node Y = null;
             if (item == null)
             {
@@ -369,7 +347,7 @@ namespace Black_Red_tree
             }
             else
             {
-                Y = FindNext(item.Value);
+                Y = FindNextNode(item.Value);
             }
 
             Replace(item, Y);//меняем значение без разрыва связи
@@ -434,7 +412,7 @@ namespace Black_Red_tree
             return Root.Value;
         }
 
-        public void Delete(Node n)
+        private void Delete(Node n)
         {
             if (n.Parent != null)
                 DeleteCase2(n);
