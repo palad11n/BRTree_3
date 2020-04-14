@@ -33,7 +33,7 @@ namespace Black_Red_tree
 
                             break;
                         case '3':
-                            var value = Convert.ToInt32(button.Split(' ')[1]);
+                            int value = Convert.ToInt32(button.Split(' ')[1]);
                             if (tree.GetColorNodeByKey(value) == Color.NaN)
                                 Console.WriteLine("Node does not exist.");
                             else Console.WriteLine("Color of node: " + tree.GetColorNodeByKey(value));

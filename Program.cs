@@ -14,10 +14,10 @@ namespace Black_Red_tree
     {
         static void Main(string[] args)
         {
-            int[] nodes1 = { 10, 42, 20, 36, 92, 18 };
-            int[] nodes = { 25, 8, 52, 46, 22, 78 };
+            int[] nodes = { 5,23,32,19,39,69,96,29,76,67};
+            int[] nodes1= { 25, 8, 52, 46, 22, 78 };
             ITree tree = new RBTree();
-            var random = new Random();//random.Next(1, 100);
+            var random = new Random();// random.Next(1, 100);
             for (int i = 0; i < nodes.Length; i++)
             {
                 var node = nodes[i];

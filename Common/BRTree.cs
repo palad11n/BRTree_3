@@ -92,22 +92,21 @@ namespace Black_Red_tree
         public Node FindNodeByKey(double key)
         {
             bool isFound = false;
-            Node temp = Root;
-
+            Node tempNode = Root;
             while (!isFound)
             {
-                if (temp == null) break;
+                if (tempNode == null) break;
 
-                if (temp != null && key < temp.Value)
-                    temp = temp.Left;
+                if (tempNode != null && key < tempNode.Value)
+                    tempNode = tempNode.Left;
 
-                if (temp != null && key > temp.Value)
-                    temp = temp.Right;
+                if (tempNode != null && key > tempNode.Value)
+                    tempNode = tempNode.Right;
 
-                if (temp != null && key == temp.Value)
+                if (tempNode != null && key == tempNode.Value)
                     isFound = true;
             }
-            if (isFound) return temp;
+            if (isFound) return tempNode;
             else return null;
         }
 
@@ -117,10 +116,10 @@ namespace Black_Red_tree
                 Root = new Node(key);
             else
             {
-                var node = Root;
+                Node node = Root;
                 while (node != null)
                 {
-                    var nextNode = key < node.Value ? node.Left : node.Right;
+                    Node nextNode = key < node.Value ? node.Left : node.Right;
                     if (nextNode == null)
                         if (key < node.Value)
                         {
@@ -290,8 +289,7 @@ namespace Black_Red_tree
                     }
                     if (node.Parent != null)
                         node = node.Parent;
-                    else
-                        return null;
+                    else return null;
                 }
             }
             return node;
@@ -314,8 +312,7 @@ namespace Black_Red_tree
                     }
                     if (node.Parent != null)
                         node = node.Parent;
-                    else
-                        return null;
+                    else return null;
                 }
             }
             return node;
@@ -341,7 +338,11 @@ namespace Black_Red_tree
             Node item = FindNodeByKey(key);
             Node Y = null;
             if (item == null)
+                return double.NaN;
+
+            if (Root.Left == null && Root.Right == null && item.Value == Root.Value)
             {
+                Root = null;
                 return double.NaN;
             }
 
@@ -358,10 +359,12 @@ namespace Black_Red_tree
             if (Y.Colour != Color.R && Y.Right == null && Y.Left == null)
             {
                 Delete(Y);
+
                 if (Y.Parent != null && Y == Y.Parent.Right)
                     Y.Parent.Right = null;
                 else if (Y.Parent != null)
                     Y.Parent.Left = null;
+
                 return Root.Value;
             }
 
@@ -385,10 +388,18 @@ namespace Black_Red_tree
             {
                 if (Y == Y.Parent.Left)
                     Y.Parent.Left = Y.Right;
-                else
-                    Y.Parent.Right = Y.Right;
+                else Y.Parent.Right = Y.Right;
+
                 Y.Right.Parent = Y.Parent;
                 Y.Right.Colour = Color.B;
+            }
+            else if (Y.Colour == Color.B && Y.Left != null && Y.Left.Colour == Color.R)
+            {
+                if (Y == Y.Parent.Left)
+                    Y.Parent.Left = Y.Left;
+                else Y.Right = Y.Left;
+                Y.Left.Parent = Y.Parent;
+                Y.Left.Colour = Color.B;
             }
             else
             {
@@ -427,7 +438,7 @@ namespace Black_Red_tree
         {
             var bro = FindBrother(n);
 
-            if (bro.Colour == Color.R)
+            if (bro != null && bro.Colour == Color.R)
             {
                 n.Parent.Colour = Color.R;
                 bro.Colour = Color.B;
@@ -441,11 +452,11 @@ namespace Black_Red_tree
         private void DeleteCase3(Node n)
         {
             var bro = FindBrother(n);
-            if (n.Parent.Colour == Color.B && bro.Colour == Color.B && ((bro.Left == null && bro.Right == null)
+            if (n.Parent.Colour == Color.B && bro.Colour == Color.B
+                && ((bro.Left == null && bro.Right == null)
                 || (bro.Left != null && bro.Left.Colour == Color.B
-            && bro.Right != null &&
-
-            bro.Right.Colour == Color.B)))
+                && (bro.Right != null
+                && bro.Right.Colour == Color.B))))
             {
                 bro.Colour = Color.R;
                 Delete(n.Parent);
@@ -456,9 +467,10 @@ namespace Black_Red_tree
         private void DeleteCase4(Node n)
         {
             var bro = FindBrother(n);
-            if (((bro.Left == null && bro.Right == null) || ((bro.Left != null && bro.Left.Colour == Color.B)
-            && (bro.Right != null && bro.Right.Colour == Color.B)))
-            && n.Parent.Colour == Color.R && bro.Colour == Color.B)
+            if (bro != null && ((bro.Left == null && bro.Right == null)
+                || (bro.Left != null && bro.Left.Colour == Color.B
+                && bro.Right != null && bro.Right.Colour == Color.B))
+                && n.Parent.Colour == Color.R && bro.Colour == Color.B)
             {
                 bro.Colour = Color.R;
                 n.Parent.Colour = Color.B;
@@ -469,37 +481,46 @@ namespace Black_Red_tree
         private void DeleteCase5(Node n)
         {
             var bro = FindBrother(n);
-            if (bro.Colour == Color.B)
+            if (bro != null && bro.Colour == Color.B)
             {
-                if (n == n.Parent.Left && bro.Right.Colour == Color.B && bro.Left.Colour == Color.R)
+                if (bro.Left != null && n == n.Parent.Left &&
+                 (bro.Right == null || bro.Right.Colour == Color.B)
+                 && bro.Left.Colour == Color.R)
                 {
                     bro.Colour = Color.R;
                     bro.Left.Colour = Color.B;
                     RightRotate(bro);
                 }
-                else if (n == n.Parent.Right && bro.Left.Colour == Color.B && bro.Right.Colour == Color.R)
+                else if (bro.Right != null && n == n.Parent.Right &&
+                (bro.Left == null || bro.Left.Colour == Color.B)
+                && bro.Right.Colour == Color.R)
                 {
                     bro.Colour = Color.R;
                     bro.Right.Colour = Color.B;
                     LeftRotate(bro);
                 }
+
             }
+
             DeleteCase6(n);
         }
 
         private void DeleteCase6(Node n)
         {
             var bro = FindBrother(n);
-            bro.Colour = n.Parent.Colour;
+            if (bro != null)
+                bro.Colour = n.Parent.Colour;
             n.Parent.Colour = Color.B;
             if (n == n.Parent.Left)
             {
-                bro.Right.Colour = Color.B;
+                if (bro != null && bro.Right != null)
+                    bro.Right.Colour = Color.B;
                 LeftRotate(n.Parent);
             }
             else
             {
-                bro.Left.Colour = Color.B;
+                if (bro != null && bro.Left != null)
+                    bro.Left.Colour = Color.B;
                 RightRotate(n.Parent);
             }
             #endregion
