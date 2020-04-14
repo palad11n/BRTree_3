@@ -20,7 +20,7 @@ namespace Black_Red_tree
             public NodeInfo Parent, Left, Right;
         }
 
-        public static void Print(this Node root, int topMargin = 2, int leftMargin = 2)
+        public static void Print(this Node root, int topMargin = 2, int leftMargin = 25)
         {
             if (root == null) return;
             int rootTop = Console.CursorTop + topMargin;
@@ -29,63 +29,63 @@ namespace Black_Red_tree
             //хождение по дереву
             for (int lvl = 0; next != null; lvl++)
             {
-                var item = new NodeInfo { Node = next, Value = next.Value.ToString() + next.Colour.ToString() };
-                item.Color = next.Colour;
+                var nodeInfo = new NodeInfo { Node = next, Value = next.Value.ToString() + next.Colour.ToString() };
+                nodeInfo.Color = next.Colour;
                 if (lvl < last.Count)
                 {
-                    item.StartPos = last[lvl].EndPos + 1;
-                    last[lvl] = item;
+                    nodeInfo.StartPos = last[lvl].EndPos + 1;
+                    last[lvl] = nodeInfo;
                 }
                 else
                 {
-                    item.StartPos = leftMargin;
-                    last.Add(item);
+                    nodeInfo.StartPos = leftMargin;
+                    last.Add(nodeInfo);
                 }
                 if (lvl > 0)
                 {
-                    item.Parent = last[lvl - 1];
-                    if (next == item.Parent.Node.Left)
+                    nodeInfo.Parent = last[lvl - 1];
+                    if (next == nodeInfo.Parent.Node.Left)
                     {
-                        item.Parent.Left = item;
-                        item.EndPos = Math.Max(item.EndPos, item.Parent.StartPos);
+                        nodeInfo.Parent.Left = nodeInfo;
+                        nodeInfo.EndPos = Math.Max(nodeInfo.EndPos, nodeInfo.Parent.StartPos);
                     }
                     else
                     {
-                        item.Parent.Right = item;
-                        item.StartPos = Math.Max(item.StartPos, item.Parent.EndPos);
+                        nodeInfo.Parent.Right = nodeInfo;
+                        nodeInfo.StartPos = Math.Max(nodeInfo.StartPos, nodeInfo.Parent.EndPos);
                     }
                 }
                 next = next.Left ?? next.Right;
-                for (; next == null; item = item.Parent)
+                for (; next == null; nodeInfo = nodeInfo.Parent)
                 {
-                    Print(item, rootTop + 2 * lvl);
+                    Print(nodeInfo, rootTop + 2 * lvl);
                     if (--lvl < 0) break;
-                    if (item == item.Parent.Left)
+                    if (nodeInfo == nodeInfo.Parent.Left)
                     {
-                        item.Parent.StartPos = item.EndPos;
-                        next = item.Parent.Node.Right;
+                        nodeInfo.Parent.StartPos = nodeInfo.EndPos;
+                        next = nodeInfo.Parent.Node.Right;
                     }
                     else
                     {
-                        if (item.Parent.Left == null)
-                            item.Parent.EndPos = item.StartPos;
+                        if (nodeInfo.Parent.Left == null)
+                            nodeInfo.Parent.EndPos = nodeInfo.StartPos;
                         else
-                            item.Parent.StartPos += (item.StartPos - item.Parent.EndPos) / 2;
+                            nodeInfo.Parent.StartPos += (nodeInfo.StartPos - nodeInfo.Parent.EndPos) / 2;
                     }
                 }
             }
             Console.SetCursorPosition(0, rootTop + 2 * last.Count - 1);
         }
 
-        private static void Print(NodeInfo item, int top)
+        private static void Print(NodeInfo nodeInfo, int top)
         {
-            SwapColors();
-            Print(item.Value, top, item.StartPos);
-            SwapColors();
-            if (item.Left != null)
-                PrintLink(top + 1, "┌", "┘", item.Left.StartPos + item.Left.Size / 2, item.StartPos);
-            if (item.Right != null)
-                PrintLink(top + 1, "└", "┐", item.EndPos - 1, item.Right.StartPos + item.Right.Size / 2);
+            SwapColors(nodeInfo.Color);
+            Print(nodeInfo.Value, top, nodeInfo.StartPos);
+            Console.ResetColor();
+            if (nodeInfo.Left != null)
+                PrintLink(top + 1, "┌", "┘", nodeInfo.Left.StartPos + nodeInfo.Left.Size / 2, nodeInfo.StartPos);
+            if (nodeInfo.Right != null)
+                PrintLink(top + 1, "└", "┐", nodeInfo.EndPos - 1, nodeInfo.Right.StartPos + nodeInfo.Right.Size / 2);
         }
         
         private static void PrintLink(int top, string start, string end, int startPos, int endPos)
@@ -103,11 +103,14 @@ namespace Black_Red_tree
             while (Console.CursorLeft < right) Console.Write(node);
         }
 
-        private static void SwapColors()
+        private static void SwapColors(Color color)
         {
-            var color = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Blue;// цвет, которым выводятся символы
-            Console.BackgroundColor = ConsoleColor.Cyan; // цвет, на фоне которого выводятся символы
+            Console.ForegroundColor = ConsoleColor.White;
+            if (color == Color.R)
+                Console.BackgroundColor = ConsoleColor.Red;
+            else Console.BackgroundColor = ConsoleColor.Blue;
+            // цвет, на фоне которого выводятся символы - Console.BackgroundColor
+            // цвет, которым выводятся символы - Console.ForegroundColor
         }
     }
 }
